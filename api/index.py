@@ -1,5 +1,5 @@
-# 이 부분을 수정했어요!
-from vercel_flask import VercelFlask
+# 다시 원래대로 Flask를 사용합니다.
+from flask import Flask
 # 나머지 필요한 모듈들은 그대로 가져옵니다.
 import sqlite3
 import time
@@ -7,8 +7,8 @@ from flask import request, render_template, redirect, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from markupsafe import Markup, escape
 
-# 이 부분도 수정했어요!
-app = VercelFlask(__name__)
+# 다시 원래대로 Flask(__name__)을 사용합니다.
+app = Flask(__name__)
 
 # 데이터베이스 파일의 경로를 설정합니다.
 DATABASE = '/tmp/board.db'
@@ -57,7 +57,7 @@ def main_page():
     posts = cursor.fetchall()
     return render_template('index.html', posts=posts)
 
-# 글쓰기 라우트
+# 글쓰기, 삭제 라우트는 이전과 동일합니다. (생략)
 @app.route('/write', methods=['POST'])
 def write_post():
     init_db()
@@ -74,7 +74,6 @@ def write_post():
     db.commit()
     return redirect('/')
 
-# 삭제 라우트
 @app.route('/delete', methods=['POST'])
 def delete_post():
     init_db()

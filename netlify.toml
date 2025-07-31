@@ -1,0 +1,11 @@
+[build]
+  publish = "static"
+
+[functions]
+  directory = "api"
+  included_files = ["templates/**"]
+
+[[redirects]]
+  from = "/*"
+  to = "/api/index"
+  status = 200

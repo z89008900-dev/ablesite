@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심플 방명록</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h2>✍️ 에이블 대나무 숲</h2>
+    <form action="/write" method="post">
+        <table class="write-table">
+            <tbody>
+                <tr>
+                    <th>이름</th>
+                    <td><input type="text" name="nickname" size="20" required></td>
+                    <th>비밀번호</th>
+                    <td><input type="password" name="password" size="20" required></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <textarea name="content" rows="5" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="submit-cell">
+                        <button type="submit">작성하기</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <hr>
+    <table class="list-table">
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>
+                    <strong>{{ post.nickname }}</strong><br>
+                    <p class="post-content">{{ post.content | nl2br }}</p>
+                    <span class="post-meta">{{ post.created_at }}</span>
+                </td>
+                <td class="delete-cell">
+                    <form action="/delete" method="post">
+                        <input type="hidden" name="post_id" value="{{ post.id }}">
+                        <input type="password" name="password" size="8" placeholder="비번">
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2" style="text-align: center; padding: 20px;">
+                    첫 방명록을 남겨주세요!
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
